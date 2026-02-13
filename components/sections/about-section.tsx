@@ -1,4 +1,4 @@
-import { UserRound } from "lucide-react";
+import Image from "next/image";
 import { valueCards } from "@/lib/constants";
 import { Container } from "@/components/ui/container";
 
@@ -8,10 +8,17 @@ export function AboutSection() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_18%,rgba(196,93,44,0.24),transparent_34%)]" />
       <Container>
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="flex min-h-80 items-center justify-center rounded-[22px] border border-white/15 bg-white/6">
-            <div className="text-center">
-              <UserRound className="mx-auto h-14 w-14 text-white/70" />
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-white/60">Photo Placeholder</p>
+          <div className="relative min-h-80 overflow-hidden rounded-[22px] border border-white/15 bg-white/6">
+            <Image
+              src="/images/ambler-theater.jpg"
+              alt="Ambler Theater sign in Ambler, Pennsylvania"
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
+              priority={false}
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-4 pb-4 pt-8">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/80">Ambler, Pennsylvania</p>
             </div>
           </div>
 

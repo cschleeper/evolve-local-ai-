@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { UserRound } from "lucide-react";
+import Image from "next/image";
 import { Container } from "@/components/ui/container";
 import { CTASection } from "@/components/ui/cta-section";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -44,10 +44,16 @@ export default function AboutPage() {
       </section>
       <section className="pb-16">
         <Container className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="flex min-h-80 items-center justify-center rounded-[20px] border border-black/10 bg-[var(--color-card)]">
-            <div className="text-center">
-              <UserRound className="mx-auto h-14 w-14 text-[var(--color-muted)]" />
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-muted)]">Photo Placeholder</p>
+          <div className="relative min-h-80 overflow-hidden rounded-[20px] border border-black/10 bg-[var(--color-card)]">
+            <Image
+              src="/images/ambler-theater.jpg"
+              alt="Ambler Theater sign in Ambler, Pennsylvania"
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
+            />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-4 pb-4 pt-8">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/80">Ambler, Pennsylvania</p>
             </div>
           </div>
           <div>
