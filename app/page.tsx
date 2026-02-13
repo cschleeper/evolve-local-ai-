@@ -1,65 +1,61 @@
-import Image from "next/image";
+import dynamic from "next/dynamic";
+import type { Metadata } from "next";
+import { HeroSection } from "@/components/sections/hero-section";
+import { TrustBar } from "@/components/sections/trust-bar";
+import { ProblemSolutionSection } from "@/components/sections/problem-solution-section";
+import { homepageFaq } from "@/lib/constants";
+import { absoluteUrl } from "@/lib/utils";
+import { faqSchema, localBusinessSchema } from "@/lib/schemas";
+import { JsonLd } from "@/components/ui/json-ld";
 
-export default function Home() {
+const ServicesSection = dynamic(() => import("@/components/sections/services-section").then((mod) => mod.ServicesSection));
+const AssistantDeepDiveSection = dynamic(() =>
+  import("@/components/sections/assistant-deep-dive-section").then((mod) => mod.AssistantDeepDiveSection),
+);
+const UseCasesSection = dynamic(() => import("@/components/sections/use-cases-section").then((mod) => mod.UseCasesSection));
+const HowItWorksSection = dynamic(() =>
+  import("@/components/sections/how-it-works-section").then((mod) => mod.HowItWorksSection),
+);
+const PackagesSection = dynamic(() => import("@/components/sections/packages-section").then((mod) => mod.PackagesSection));
+const AboutSection = dynamic(() => import("@/components/sections/about-section").then((mod) => mod.AboutSection));
+const BlogPreviewSection = dynamic(() =>
+  import("@/components/sections/blog-preview-section").then((mod) => mod.BlogPreviewSection),
+);
+const FAQSection = dynamic(() => import("@/components/sections/faq-section").then((mod) => mod.FAQSection));
+const CTASection = dynamic(() => import("@/components/ui/cta-section").then((mod) => mod.CTASection));
+
+export const metadata: Metadata = {
+  title: "AI for Local Business in Pennsylvania",
+  description:
+    "Evolve Local AI installs and maintains AI assistants, chatbots, and automations for local businesses in Ambler, PA and across Pennsylvania.",
+  alternates: { canonical: absoluteUrl("/") },
+  keywords: ["AI for local business", "AI assistant installation", "business AI automation"],
+  openGraph: {
+    title: "Evolve Local AI | AI for Local Business",
+    description:
+      "Install a dedicated AI Assistant for your business with hands-on setup, automation, and local support.",
+    url: absoluteUrl("/"),
+    type: "website",
+  },
+};
+
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <JsonLd data={localBusinessSchema()} />
+      <JsonLd data={faqSchema(homepageFaq)} />
+      <HeroSection />
+      <TrustBar />
+      <ProblemSolutionSection />
+      <ServicesSection />
+      <AssistantDeepDiveSection />
+      <UseCasesSection />
+      <HowItWorksSection />
+      <PackagesSection />
+      <AboutSection />
+      <BlogPreviewSection />
+      <FAQSection />
+      <CTASection />
+    </>
   );
 }
