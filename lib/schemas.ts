@@ -1,42 +1,76 @@
 import { absoluteUrl } from "@/lib/utils";
-import { siteConfig, type ServiceItem } from "@/lib/constants";
+import { siteConfig, socialLinks, type ServiceItem } from "@/lib/constants";
+import { serviceSeoContent } from "@/lib/service-seo-content";
+import { defaultOgImage } from "@/lib/seo";
 
 type FAQ = { question: string; answer: string };
 
-export function localBusinessSchema() {
+function toE164Phone(phone: string) {
+  const digits = phone.replace(/[^\d]/g, "");
+  if (digits.length === 11 && digits.startsWith("1")) {
+    return `+${digits}`;
+  }
+  if (digits.length === 10) {
+    return `+1${digits}`;
+  }
+  return phone;
+}
+
+export function localBusinessSchema(pagePath = "/") {
+  const sameAs = socialLinks.map((link) => link.href);
+
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: siteConfig.name,
-    url: siteConfig.siteUrl,
+    url: absoluteUrl("/"),
     description: siteConfig.description,
     email: siteConfig.email,
-    telephone: siteConfig.phone,
-    areaServed: ["Ambler", "Pennsylvania", "Philadelphia Metro"],
+    telephone: toE164Phone(siteConfig.phone),
+    priceRange: "$$",
+    areaServed: [
+      {
+        "@type": "State",
+        name: "Pennsylvania",
+      },
+      {
+        "@type": "City",
+        name: "Ambler",
+      },
+      {
+        "@type": "City",
+        name: "Philadelphia",
+      },
+    ],
     address: {
       "@type": "PostalAddress",
       addressLocality: "Ambler",
       addressRegion: "PA",
       addressCountry: "US",
     },
+    mainEntityOfPage: absoluteUrl(pagePath),
+    ...(sameAs.length ? { sameAs } : {}),
   };
 }
 
 export function serviceSchema(service: ServiceItem) {
+  const seoContent = serviceSeoContent[service.slug];
+
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: service.title,
-    description: service.shortDescription,
+    name: seoContent?.serviceType || service.title,
+    serviceType: seoContent?.serviceType || service.title,
+    description: seoContent?.schemaDescription || service.shortDescription,
     provider: {
       "@type": "LocalBusiness",
       name: siteConfig.name,
-      areaServed: "Pennsylvania",
+      url: siteConfig.siteUrl,
     },
-    areaServed: "United States",
+    areaServed: "Pennsylvania",
     offers: {
       "@type": "Offer",
-      priceSpecification: service.startsAt,
+      description: `Starting at ${service.startsAt}`,
       url: absoluteUrl(`/services/${service.slug}`),
     },
   };
@@ -76,6 +110,8 @@ export function blogPostingSchema(args: {
   slug: string;
   date: string;
   updated: string;
+  author: string;
+  image?: string;
   tags: string[];
 }) {
   return {
@@ -87,13 +123,19 @@ export function blogPostingSchema(args: {
     dateModified: args.updated,
     keywords: args.tags,
     author: {
-      "@type": "Organization",
-      name: siteConfig.name,
+      "@type": "Person",
+      name: args.author,
     },
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
+      url: siteConfig.siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: defaultOgImage,
+      },
     },
+    image: args.image ? absoluteUrl(args.image) : defaultOgImage,
     mainEntityOfPage: absoluteUrl(`/blog/${args.slug}`),
     url: absoluteUrl(`/blog/${args.slug}`),
   };

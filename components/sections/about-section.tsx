@@ -28,7 +28,7 @@ export function AboutSection() {
               AI implementation built for local businesses, by a local team.
             </h2>
             <p className="mt-5 text-sm leading-8 text-white/80 sm:text-base">
-              Evolve Local AI is based in Ambler, Pennsylvania and focused on practical implementation. We started this company because local businesses were hearing nonstop AI hype but getting very little real rollout support.
+              Evolve Local AI is based in Ambler, Pennsylvania and focused on practical implementation. We started this company because local businesses across Montgomery County were hearing nonstop AI hype but getting very little real rollout support.
             </p>
             <p className="mt-4 text-sm leading-8 text-white/80 sm:text-base">
               Large platforms are designed for enterprise teams. We build practical systems for owners and small teams who need faster response times, cleaner operations, and better follow-through.

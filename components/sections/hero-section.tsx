@@ -21,7 +21,7 @@ export function HeroSection() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--color-muted)] sm:text-[1.07rem]">
-              We install, configure, and maintain AI assistants for local businesses. From conversion-focused website chatbots to a dedicated AI that runs on its own computer, we build the system and keep it running.
+              We install, configure, and maintain AI assistants for local businesses. From conversion-focused website chatbots to a dedicated AI that runs on its own computer, we build the system and keep it running for Pennsylvania businesses across Ambler, Montgomery County, and the Greater Philadelphia area.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">

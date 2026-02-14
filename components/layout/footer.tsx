@@ -59,7 +59,7 @@ export function Footer() {
                 {siteConfig.phone}
               </Link>
             </li>
-            <li>{siteConfig.location}, Pennsylvania</li>
+            <li>{siteConfig.location}</li>
           </ul>
         </div>
       </div>
@@ -67,13 +67,15 @@ export function Footer() {
       <div className="border-t border-black/10 py-4">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 text-xs text-[var(--color-muted)] sm:px-6 lg:px-8">
           <p>© {new Date().getFullYear()} Evolve Local AI. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            {socialLinks.map((link) => (
-              <Link key={link.label} href={link.href} className="hover:text-[var(--color-accent)]">
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {socialLinks.length ? (
+            <div className="flex items-center gap-4">
+              {socialLinks.map((link) => (
+                <Link key={link.label} href={link.href} className="hover:text-[var(--color-accent)]">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </footer>

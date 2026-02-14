@@ -5,24 +5,21 @@ import { ContactForm } from "@/components/ui/contact-form";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/ui/json-ld";
 import { siteConfig, socialLinks } from "@/lib/constants";
-import { breadcrumbSchema } from "@/lib/schemas";
-import { absoluteUrl, formatPhoneForHref } from "@/lib/utils";
+import { breadcrumbSchema, localBusinessSchema } from "@/lib/schemas";
+import { formatPhoneForHref } from "@/lib/utils";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
+export const metadata: Metadata = buildMetadata({
+  title: "Free AI Consultation | Evolve Local AI",
   description:
-    "Contact Evolve Local AI for a free discovery call. Based in Ambler, PA and serving local businesses across Pennsylvania and remotely.",
-  alternates: { canonical: absoluteUrl("/contact") },
-  openGraph: {
-    title: "Contact Evolve Local AI",
-    description: "Book your free consultation for AI implementation services.",
-    url: absoluteUrl("/contact"),
-  },
-};
+    "Book a free 30-minute discovery call. We will map your highest-impact AI use case and show you how implementation works.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={localBusinessSchema("/contact")} />
       <JsonLd
         data={
           breadcrumbSchema([
@@ -45,6 +42,7 @@ export default function ContactPage() {
               <div className="mt-8 rounded-[20px] border border-black/10 bg-[var(--color-card)] p-6">
                 <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">Direct Contact</p>
                 <ul className="mt-4 space-y-2 text-sm text-[var(--color-ink)]">
+                  <li>Business: {siteConfig.name}</li>
                   <li>
                     Sales:{" "}
                     <Link href={`mailto:${siteConfig.salesEmail}`} className="text-[var(--color-accent)] underline underline-offset-4">
@@ -63,7 +61,8 @@ export default function ContactPage() {
                       {siteConfig.phone}
                     </Link>
                   </li>
-                  <li>Location: {siteConfig.location}, Pennsylvania</li>
+                  <li>Location: {siteConfig.location}</li>
+                  <li>Hours: {siteConfig.hours}</li>
                 </ul>
                 <div className="mt-5 flex flex-wrap gap-3 text-sm">
                   <Link href={`mailto:${siteConfig.salesEmail}`} className="text-[var(--color-accent)] underline underline-offset-4">
@@ -76,22 +75,35 @@ export default function ContactPage() {
                     Call now
                   </Link>
                 </div>
-                <div className="mt-5 border-t border-black/10 pt-5">
-                  <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">Social</p>
-                  <div className="mt-3 flex flex-wrap gap-4">
-                    {socialLinks.map((social) => (
-                      <Link key={social.label} href={social.href} className="text-sm text-[var(--color-accent)] underline underline-offset-4">
-                        {social.label}
-                      </Link>
-                    ))}
+                {socialLinks.length ? (
+                  <div className="mt-5 border-t border-black/10 pt-5">
+                    <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">Social</p>
+                    <div className="mt-3 flex flex-wrap gap-4">
+                      {socialLinks.map((social) => (
+                        <Link key={social.label} href={social.href} className="text-sm text-[var(--color-accent)] underline underline-offset-4">
+                          {social.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
               <div className="mt-6 rounded-[20px] border border-black/10 bg-[var(--color-card)] p-6">
                 <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">Schedule</p>
                 <p className="mt-3 text-sm leading-7 text-[var(--color-muted)]">
                   Prefer to book directly? Add your Calendly link here: <span className="font-medium text-[var(--color-ink)]">https://calendly.com/your-link</span>
                 </p>
+              </div>
+              <div className="mt-6 overflow-hidden rounded-[20px] border border-black/10 bg-[var(--color-card)]">
+                <iframe
+                  title="Map of Ambler, Pennsylvania"
+                  src="https://www.google.com/maps?q=Ambler%2C%20PA&output=embed"
+                  width="100%"
+                  height="280"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full border-0"
+                />
               </div>
             </div>
             <ContactForm />

@@ -5,24 +5,20 @@ import { CTASection } from "@/components/ui/cta-section";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { valueCards } from "@/lib/constants";
-import { absoluteUrl } from "@/lib/utils";
-import { breadcrumbSchema } from "@/lib/schemas";
+import { breadcrumbSchema, localBusinessSchema } from "@/lib/schemas";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
+export const metadata: Metadata = buildMetadata({
+  title: "About Evolve Local AI | Ambler, Pennsylvania",
   description:
-    "Learn why Evolve Local AI focuses on practical AI implementation for local businesses in Ambler, PA and beyond.",
-  alternates: { canonical: absoluteUrl("/about") },
-  openGraph: {
-    title: "About Evolve Local AI",
-    description: "Local AI implementation partner based in Ambler, Pennsylvania.",
-    url: absoluteUrl("/about"),
-  },
-};
+    "AI implementation built for local businesses, by a local team in Ambler, PA. Direct setup, clear communication, ongoing support.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={localBusinessSchema("/about")} />
       <JsonLd
         data={
           breadcrumbSchema([
@@ -51,6 +47,7 @@ export default function AboutPage() {
               fill
               sizes="(max-width: 1024px) 100vw, 40vw"
               className="object-cover"
+              priority
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-4 pb-4 pt-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/80">Ambler, Pennsylvania</p>
@@ -65,7 +62,7 @@ export default function AboutPage() {
               Our focus is straightforward: practical AI systems that do real work, delivered in plain English, with direct support when you need it.
             </p>
             <p className="mt-4 text-sm leading-8 text-[var(--color-muted)]">
-              We serve businesses throughout Pennsylvania and the greater Philadelphia area, and we also support remote clients across the U.S.
+              We serve businesses throughout Ambler, Montgomery County, and the greater Philadelphia area, and we also support remote clients across Pennsylvania and the U.S.
             </p>
           </div>
         </Container>
