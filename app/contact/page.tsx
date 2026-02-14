@@ -45,9 +45,24 @@ export default function ContactPage() {
               <div className="mt-8 rounded-[20px] border border-black/10 bg-[var(--color-card)] p-6">
                 <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-muted)]">Direct Contact</p>
                 <ul className="mt-4 space-y-2 text-sm text-[var(--color-ink)]">
-                  <li>Sales: {siteConfig.salesEmail}</li>
-                  <li>Support (existing clients): {siteConfig.supportEmail}</li>
-                  <li>Phone: {siteConfig.phone}</li>
+                  <li>
+                    Sales:{" "}
+                    <Link href={`mailto:${siteConfig.salesEmail}`} className="text-[var(--color-accent)] underline underline-offset-4">
+                      {siteConfig.salesEmail}
+                    </Link>
+                  </li>
+                  <li>
+                    Support (existing clients):{" "}
+                    <Link href={`mailto:${siteConfig.supportEmail}`} className="text-[var(--color-accent)] underline underline-offset-4">
+                      {siteConfig.supportEmail}
+                    </Link>
+                  </li>
+                  <li>
+                    Phone:{" "}
+                    <Link href={formatPhoneForHref(siteConfig.phone)} className="text-[var(--color-accent)] underline underline-offset-4">
+                      {siteConfig.phone}
+                    </Link>
+                  </li>
                   <li>Location: {siteConfig.location}, Pennsylvania</li>
                 </ul>
                 <div className="mt-5 flex flex-wrap gap-3 text-sm">

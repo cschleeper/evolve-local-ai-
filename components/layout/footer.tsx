@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { companyLinks, serviceLinks, siteConfig, socialLinks } from "@/lib/constants";
+import { formatPhoneForHref } from "@/lib/utils";
 
 export function Footer() {
   return (
@@ -41,9 +42,23 @@ export function Footer() {
         <div>
           <p className="eyebrow text-[var(--color-muted)]">Contact</p>
           <ul className="mt-4 space-y-2 text-sm text-[var(--color-ink)]">
-            <li>Sales: {siteConfig.salesEmail}</li>
-            <li>Support: {siteConfig.supportEmail}</li>
-            <li>{siteConfig.phone}</li>
+            <li>
+              Sales:{" "}
+              <Link href={`mailto:${siteConfig.salesEmail}`} className="hover:text-[var(--color-accent)]">
+                {siteConfig.salesEmail}
+              </Link>
+            </li>
+            <li>
+              Support:{" "}
+              <Link href={`mailto:${siteConfig.supportEmail}`} className="hover:text-[var(--color-accent)]">
+                {siteConfig.supportEmail}
+              </Link>
+            </li>
+            <li>
+              <Link href={formatPhoneForHref(siteConfig.phone)} className="hover:text-[var(--color-accent)]">
+                {siteConfig.phone}
+              </Link>
+            </li>
             <li>{siteConfig.location}, Pennsylvania</li>
           </ul>
         </div>

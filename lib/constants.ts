@@ -24,7 +24,7 @@ export const siteConfig = {
   salesEmail: process.env.SALES_EMAIL || "sales@evolvelocalai.com",
   supportEmail: process.env.SUPPORT_EMAIL || "support@evolvelocalai.com",
   email: process.env.SALES_EMAIL || "sales@evolvelocalai.com",
-  phone: "(267) 555-0142",
+  phone: "(267) 328-5132",
   location: "Ambler, PA",
   region: "Pennsylvania",
   description:

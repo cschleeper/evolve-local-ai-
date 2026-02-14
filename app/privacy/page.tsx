@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/ui/json-ld";
+import { siteConfig } from "@/lib/constants";
 import { breadcrumbSchema } from "@/lib/schemas";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -38,7 +40,13 @@ export default function PrivacyPage() {
             <h2>Data security</h2>
             <p>We apply reasonable technical and organizational safeguards to protect your data.</p>
             <h2>Your rights</h2>
-            <p>You may request access, correction, or deletion of your data by contacting us at sales@evolvelocalai.com.</p>
+            <p>
+              You may request access, correction, or deletion of your data by contacting us at{" "}
+              <Link href={`mailto:${siteConfig.salesEmail}`} className="text-[var(--color-accent)] underline underline-offset-4">
+                {siteConfig.salesEmail}
+              </Link>
+              .
+            </p>
           </div>
         </Container>
       </section>

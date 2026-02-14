@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/ui/json-ld";
+import { siteConfig } from "@/lib/constants";
 import { breadcrumbSchema } from "@/lib/schemas";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -38,7 +40,13 @@ export default function TermsPage() {
             <h2>Limitation of liability</h2>
             <p>To the extent permitted by law, Evolve Local AI is not liable for indirect, incidental, or consequential damages.</p>
             <h2>Contact</h2>
-            <p>Questions about these terms can be sent to sales@evolvelocalai.com.</p>
+            <p>
+              Questions about these terms can be sent to{" "}
+              <Link href={`mailto:${siteConfig.salesEmail}`} className="text-[var(--color-accent)] underline underline-offset-4">
+                {siteConfig.salesEmail}
+              </Link>
+              .
+            </p>
           </div>
         </Container>
       </section>
