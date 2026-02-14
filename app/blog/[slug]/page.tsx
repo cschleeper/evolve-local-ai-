@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/ui/json-ld";
 import { getAllPosts, getPostBySlug } from "@/lib/mdx";
 import { absoluteUrl } from "@/lib/utils";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/schemas";
+import { buildMetadata, defaultOgImage } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -21,15 +22,34 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {};
   }
 
-  return {
-    title: post.frontmatter.title,
+  const metadata = buildMetadata({
+    title: `${post.frontmatter.title} | Evolve Local AI`,
     description: post.frontmatter.description,
-    alternates: { canonical: absoluteUrl(`/blog/${slug}`) },
+    path: `/blog/${slug}`,
+    keywords: post.frontmatter.tags,
+    type: "article",
+  });
+
+  return {
+    ...metadata,
     openGraph: {
-      title: post.frontmatter.title,
-      description: post.frontmatter.description,
-      url: absoluteUrl(`/blog/${slug}`),
+      ...metadata.openGraph,
       type: "article",
+      publishedTime: post.frontmatter.publishedAt,
+      modifiedTime: post.frontmatter.updatedAt,
+      authors: [post.frontmatter.author],
+      images: [
+        {
+          url: post.frontmatter.image ? absoluteUrl(post.frontmatter.image) : defaultOgImage,
+          width: 1200,
+          height: 630,
+          alt: post.frontmatter.title,
+        },
+      ],
+    },
+    twitter: {
+      ...metadata.twitter,
+      images: [post.frontmatter.image ? absoluteUrl(post.frontmatter.image) : defaultOgImage],
     },
   };
 }
@@ -62,6 +82,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             slug,
             date: post.frontmatter.publishedAt,
             updated: post.frontmatter.updatedAt,
+            author: post.frontmatter.author,
+            image: post.frontmatter.image,
             tags: post.frontmatter.tags,
           })
         }
@@ -82,7 +104,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.frontmatter.title}
           </h1>
           <p className="mt-5 max-w-3xl text-base leading-8 text-[var(--color-muted)]">{post.frontmatter.description}</p>
-          <div className="mt-4 text-sm text-[var(--color-muted)]">By {post.frontmatter.author}</div>
+          <div className="mt-4 text-sm text-[var(--color-muted)]">
+            By {post.frontmatter.author} •{" "}
+            <time dateTime={post.frontmatter.publishedAt}>
+              {new Date(post.frontmatter.publishedAt).toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </time>
+          </div>
         </Container>
       </section>
       <section className="pb-16">
@@ -104,6 +135,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
       <section className="pb-16">
         <Container className="grid gap-5 md:grid-cols-2">
+          <h2 className="md:col-span-2 font-serif-display text-4xl text-[var(--color-ink)]">Related Articles</h2>
           {related.map((item) => (
             <article key={item.slug} className="panel p-5">
               <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--color-muted)]">Related Post</p>
@@ -118,10 +150,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
       <section className="pb-16">
         <Container className="panel max-w-4xl p-8">
-          <h2 className="font-serif-display text-4xl text-[var(--color-ink)]">About Evolve Local AI</h2>
+          <h2 className="font-serif-display text-4xl text-[var(--color-ink)]">Author</h2>
+          <p className="mt-3 text-sm font-medium text-[var(--color-ink)]">{post.frontmatter.author}</p>
           <p className="mt-4 text-sm leading-8 text-[var(--color-muted)]">
             Evolve Local AI helps local businesses implement AI systems that produce real operational results. Based in Ambler, Pennsylvania, the team focuses on practical deployment over hype.
           </p>
+          <Link
+            href="/contact"
+            className="mt-6 inline-flex rounded-full bg-[var(--color-ink)] px-6 py-3 text-sm font-medium text-white hover:bg-[var(--color-accent)]"
+          >
+            Book a free consultation
+          </Link>
         </Container>
       </section>
       <CTASection />

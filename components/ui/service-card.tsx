@@ -42,7 +42,7 @@ export function ServiceCard({ icon: Icon, title, description, tags, href }: Serv
           "hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
         )}
       >
-        Explore service <ArrowRight className="h-4 w-4" />
+        Explore {title} service <ArrowRight className="h-4 w-4" />
       </Link>
     </article>
   );
