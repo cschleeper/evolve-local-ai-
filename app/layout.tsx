@@ -4,6 +4,7 @@ import { DM_Serif_Display, Outfit, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/layout/footer";
 import { Navigation } from "@/components/layout/navigation";
+import { ChatWidget } from "@/components/ui/chat-widget";
 import { siteConfig } from "@/lib/constants";
 import { absoluteUrl } from "@/lib/utils";
 import { defaultOgImage } from "@/lib/seo";
@@ -71,6 +72,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const showChatbot = process.env.NEXT_PUBLIC_ENABLE_CHATBOT === "true";
 
   return (
     <html lang="en">
@@ -86,6 +88,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <Navigation />
         <main>{children}</main>
         <Footer />
+        {showChatbot ? <ChatWidget /> : null}
       </body>
     </html>
   );
