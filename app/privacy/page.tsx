@@ -5,13 +5,17 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/ui/json-ld";
 import { siteConfig } from "@/lib/constants";
 import { breadcrumbSchema } from "@/lib/schemas";
-import { absoluteUrl } from "@/lib/utils";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
+export const metadata: Metadata = buildMetadata({
+  title: "Privacy Policy | Evolve Local AI",
   description: "Privacy policy for Evolve Local AI services website.",
-  alternates: { canonical: absoluteUrl("/privacy") },
-};
+  path: "/privacy",
+  robots: {
+    index: false,
+    follow: true,
+  },
+});
 
 export default function PrivacyPage() {
   return (

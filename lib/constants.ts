@@ -18,15 +18,21 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.evolvelocalai.com";
+const normalizedSiteUrl = rawSiteUrl
+  .replace(/^https?:\/\/evolvelocalai\.com/i, "https://www.evolvelocalai.com")
+  .replace(/\/$/, "");
+
 export const siteConfig = {
   name: "Evolve Local AI",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://evolvelocalai.com",
+  siteUrl: normalizedSiteUrl,
   salesEmail: process.env.SALES_EMAIL || "sales@evolvelocalai.com",
   supportEmail: process.env.SUPPORT_EMAIL || "support@evolvelocalai.com",
   email: process.env.SALES_EMAIL || "sales@evolvelocalai.com",
   phone: "(267) 328-5132",
   location: "Ambler, PA",
   region: "Pennsylvania",
+  hours: "By appointment",
   description:
     "AI implementation services for local businesses in Pennsylvania. We install and maintain dedicated AI assistants, chatbots, automations, and reporting systems.",
 };
@@ -119,13 +125,15 @@ export const services: ServiceItem[] = [
       },
     ],
     seo: {
-      title: "Dedicated AI Assistant for Business | Evolve Local AI",
+      title: "Dedicated AI Assistant for Small Business | Evolve Local AI",
       description:
-        "Install a dedicated AI Assistant for your business that runs 24/7 on your own hardware, handles workflows, and stays fully managed.",
+        "A 24/7 AI employee on dedicated hardware. Handles email, scheduling, reports, and 50+ integrations for local businesses in PA.",
       keywords: [
-        "dedicated AI assistant for business",
-        "AI employee",
-        "autonomous AI agent",
+        "AI assistant for small business",
+        "dedicated AI employee",
+        "AI for restaurants",
+        "AI for local business",
+        "business automation PA",
       ],
     },
     related: ["website-chatbot", "workflow-automation", "business-intelligence"],
@@ -191,13 +199,16 @@ export const services: ServiceItem[] = [
       },
     ],
     seo: {
-      title: "AI Chatbot for Business Website | Evolve Local AI",
+      title: "AI Website Chatbot for Lead Capture | Evolve Local AI",
       description:
-        "Deploy an AI chatbot for your business website that captures leads, answers customer questions, and books appointments 24/7.",
+        "Convert website visitors into customers with an AI chatbot trained on your business. Instant answers, lead capture, appointment booking.",
       keywords: [
         "AI chatbot for business website",
-        "customer service chatbot",
         "lead capture chatbot",
+        "chatbot for restaurants",
+        "after-hours chatbot",
+        "website chatbot PA",
+        "customer service chatbot",
       ],
     },
     related: ["website-redesign", "ai-assistant", "ai-phone-agent"],
@@ -263,13 +274,15 @@ export const services: ServiceItem[] = [
       },
     ],
     seo: {
-      title: "AI-Powered Website Redesign for Local Business",
+      title: "AI-Powered Website Redesign | Evolve Local AI",
       description:
-        "Get an AI-powered website redesign that improves SEO, mobile performance, and conversions for local business growth.",
+        "Modern, conversion-focused website redesigns with AI-assisted copy and local SEO optimization for Pennsylvania businesses.",
       keywords: [
-        "AI-powered website redesign",
-        "small business website SEO",
-        "conversion optimized website",
+        "AI website redesign",
+        "small business website redesign",
+        "local SEO website",
+        "website redesign Pennsylvania",
+        "conversion-focused website",
       ],
     },
     related: ["website-chatbot", "workflow-automation", "business-intelligence"],
@@ -335,13 +348,15 @@ export const services: ServiceItem[] = [
       },
     ],
     seo: {
-      title: "Business Workflow Automation Services | Evolve Local AI",
+      title: "AI Workflow Automation for Small Business | Evolve Local AI",
       description:
-        "Automate repetitive business workflows including email triage, reporting, and follow-ups with managed AI automation.",
+        "Automate email, documents, and follow-ups. Free your team from repetitive tasks with custom AI workflow automation.",
       keywords: [
-        "workflow automation",
-        "business process automation services",
-        "email automation for small business",
+        "AI workflow automation",
+        "small business automation",
+        "email automation",
+        "document automation",
+        "task automation for business",
       ],
     },
     related: ["ai-assistant", "business-intelligence", "ai-phone-agent"],
@@ -407,13 +422,15 @@ export const services: ServiceItem[] = [
       },
     ],
     seo: {
-      title: "AI Business Intelligence Dashboards & Reports",
+      title: "AI Business Intelligence & Reporting | Evolve Local AI",
       description:
-        "AI business intelligence services for local companies. Build custom dashboards and automated reports from your core data sources.",
+        "Turn POS, CRM, and spreadsheet data into daily briefings and automated reports. AI-powered dashboards for local business owners.",
       keywords: [
         "AI business intelligence",
-        "automated business reports",
-        "small business analytics dashboard",
+        "small business reporting",
+        "AI dashboards",
+        "automated reports",
+        "POS data analytics",
       ],
     },
     related: ["workflow-automation", "ai-assistant", "website-redesign"],
@@ -479,13 +496,15 @@ export const services: ServiceItem[] = [
       },
     ],
     seo: {
-      title: "AI Phone Agent for Local Businesses",
+      title: "AI Phone & Voice Agent for Business | Evolve Local AI",
       description:
-        "Deploy an AI phone and voice agent to answer calls, qualify leads, and support bookings for your local business.",
+        "AI voice agents that answer real calls, handle inquiries, and support bookings. After-hours phone coverage for local businesses.",
       keywords: [
         "AI phone agent",
         "AI voice agent for business",
-        "automated call handling",
+        "AI answering service",
+        "after-hours phone AI",
+        "restaurant phone bot",
       ],
     },
     related: ["website-chatbot", "ai-assistant", "workflow-automation"],
@@ -790,10 +809,10 @@ export const trustedResources = [
 ] as const;
 
 export const socialLinks = [
-  { label: "LinkedIn", href: "https://www.linkedin.com" },
-  { label: "X", href: "https://x.com" },
-  { label: "Facebook", href: "https://www.facebook.com" },
-];
+  { label: "LinkedIn", href: process.env.NEXT_PUBLIC_LINKEDIN_URL || "" },
+  { label: "X", href: process.env.NEXT_PUBLIC_X_URL || "" },
+  { label: "Facebook", href: process.env.NEXT_PUBLIC_FACEBOOK_URL || "" },
+].filter((link) => Boolean(link.href));
 
 export const serviceLinks = services.map((service) => ({
   label: service.title,

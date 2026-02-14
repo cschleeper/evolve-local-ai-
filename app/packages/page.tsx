@@ -8,8 +8,8 @@ import { CTASection } from "@/components/ui/cta-section";
 import { FAQAccordion } from "@/components/ui/faq-accordion";
 import { JsonLd } from "@/components/ui/json-ld";
 import { packages } from "@/lib/constants";
-import { absoluteUrl } from "@/lib/utils";
 import { breadcrumbSchema, faqSchema } from "@/lib/schemas";
+import { buildMetadata } from "@/lib/seo";
 
 const pricingFaq = [
   {
@@ -31,17 +31,12 @@ const pricingFaq = [
   },
 ];
 
-export const metadata: Metadata = {
-  title: "Packages",
+export const metadata: Metadata = buildMetadata({
+  title: "AI Implementation Packages & Pricing | Evolve Local AI",
   description:
-    "Compare Evolve Local AI packages for website chatbots, dedicated AI assistants, and full AI transformation services.",
-  alternates: { canonical: absoluteUrl("/packages") },
-  openGraph: {
-    title: "AI Implementation Packages",
-    description: "Flexible AI packages with starting pricing for local businesses.",
-    url: absoluteUrl("/packages"),
-  },
-};
+    "Starter, Professional, and Enterprise AI packages for local businesses. Starting at $1,500 for website AI to full transformation.",
+  path: "/packages",
+});
 
 export default function PackagesPage() {
   return (

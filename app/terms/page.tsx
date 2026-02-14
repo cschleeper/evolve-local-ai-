@@ -5,13 +5,17 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/ui/json-ld";
 import { siteConfig } from "@/lib/constants";
 import { breadcrumbSchema } from "@/lib/schemas";
-import { absoluteUrl } from "@/lib/utils";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
+export const metadata: Metadata = buildMetadata({
+  title: "Terms of Service | Evolve Local AI",
   description: "Terms of service for Evolve Local AI website and services.",
-  alternates: { canonical: absoluteUrl("/terms") },
-};
+  path: "/terms",
+  robots: {
+    index: false,
+    follow: true,
+  },
+});
 
 export default function TermsPage() {
   return (

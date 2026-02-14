@@ -5,21 +5,17 @@ import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { BlogPostCard } from "@/components/blog/blog-post-card";
 import { getAllPosts } from "@/lib/mdx";
-import { absoluteUrl } from "@/lib/utils";
 import { JsonLd } from "@/components/ui/json-ld";
 import { breadcrumbSchema } from "@/lib/schemas";
 import { trustedResources } from "@/lib/constants";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Practical AI implementation guides for local business owners.",
-  alternates: { canonical: absoluteUrl("/blog") },
-  openGraph: {
-    title: "Evolve Local AI Blog",
-    description: "Useful, plain-English AI guides for small and local business owners.",
-    url: absoluteUrl("/blog"),
-  },
-};
+export const metadata: Metadata = buildMetadata({
+  title: "AI for Local Business Blog | Evolve Local AI",
+  description:
+    "Practical guides, playbooks, and strategies for using AI in your local business. No hype, just real implementation advice.",
+  path: "/blog",
+});
 
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();

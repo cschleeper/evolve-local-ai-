@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { TrustBar } from "@/components/sections/trust-bar";
 import { ProblemSolutionSection } from "@/components/sections/problem-solution-section";
 import { homepageFaq } from "@/lib/constants";
-import { absoluteUrl } from "@/lib/utils";
+import { buildMetadata } from "@/lib/seo";
 import { faqSchema, localBusinessSchema } from "@/lib/schemas";
 import { JsonLd } from "@/components/ui/json-ld";
 
@@ -24,25 +24,22 @@ const BlogPreviewSection = dynamic(() =>
 const FAQSection = dynamic(() => import("@/components/sections/faq-section").then((mod) => mod.FAQSection));
 const CTASection = dynamic(() => import("@/components/ui/cta-section").then((mod) => mod.CTASection));
 
-export const metadata: Metadata = {
-  title: "AI for Local Business in Pennsylvania",
+export const metadata: Metadata = buildMetadata({
+  title: "AI for Local Business in Pennsylvania | Evolve Local AI",
   description:
-    "Evolve Local AI installs and maintains AI assistants, chatbots, and automations for local businesses in Ambler, PA and across Pennsylvania.",
-  alternates: { canonical: absoluteUrl("/") },
+    "We install, configure, and maintain AI assistants for local businesses in Pennsylvania. Chatbots, automation, and dedicated AI employees.",
+  path: "/",
   keywords: ["AI for local business", "AI assistant installation", "business AI automation"],
-  openGraph: {
-    title: "Evolve Local AI | AI for Local Business",
-    description:
-      "Install a dedicated AI Assistant for your business with hands-on setup, automation, and local support.",
-    url: absoluteUrl("/"),
-    type: "website",
+  other: {
+    "geo.region": "US-PA",
+    "geo.placename": "Ambler",
   },
-};
+});
 
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={localBusinessSchema()} />
+      <JsonLd data={localBusinessSchema("/")} />
       <JsonLd data={faqSchema(homepageFaq)} />
       <HeroSection />
       <TrustBar />

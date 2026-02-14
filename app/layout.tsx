@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { Navigation } from "@/components/layout/navigation";
 import { siteConfig } from "@/lib/constants";
 import { absoluteUrl } from "@/lib/utils";
+import { defaultOgImage } from "@/lib/seo";
 import "./globals.css";
 
 const serif = DM_Serif_Display({
@@ -27,23 +28,40 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: "Evolve Local AI | AI for Local Business",
-    template: "%s | Evolve Local AI",
+    default: "AI for Local Business in Pennsylvania | Evolve Local AI",
+    template: "%s",
   },
   description: siteConfig.description,
   alternates: { canonical: absoluteUrl("/") },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
-    title: "Evolve Local AI",
+    title: "AI for Local Business in Pennsylvania | Evolve Local AI",
     description: siteConfig.description,
     url: absoluteUrl("/"),
     siteName: siteConfig.name,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: defaultOgImage,
+        width: 1200,
+        height: 630,
+        alt: "Evolve Local AI",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Evolve Local AI",
+    title: "AI for Local Business in Pennsylvania | Evolve Local AI",
     description: siteConfig.description,
+    images: [defaultOgImage],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
