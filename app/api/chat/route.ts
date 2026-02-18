@@ -97,7 +97,13 @@ function findLatestAssistantText(value: unknown): string | null {
 
 function createGatewayClient(url: string): Promise<GatewayClient> {
   return new Promise((resolve, reject) => {
-    const ws = new WebSocket(url);
+    let ws: WebSocket;
+    try {
+      ws = new WebSocket(url);
+    } catch (error) {
+      reject(error);
+      return;
+    }
     const pending = new Map<
       string,
       {
@@ -150,7 +156,12 @@ function createGatewayClient(url: string): Promise<GatewayClient> {
       const raw = typeof event.data === "string" ? event.data : "";
       if (!raw) return;
 
-      const parsed = JSON.parse(raw) as GatewayResponse;
+      let parsed: GatewayResponse;
+      try {
+        parsed = JSON.parse(raw) as GatewayResponse;
+      } catch {
+        return;
+      }
       if (parsed.type !== "res" || typeof parsed.id !== "string") return;
 
       const match = pending.get(parsed.id);
@@ -169,6 +180,18 @@ function createGatewayClient(url: string): Promise<GatewayClient> {
     ws.addEventListener("close", () => {
       cleanupPending(new Error("Gateway socket closed."));
     });
+
+    setTimeout(() => {
+      if (ws.readyState !== WebSocket.OPEN) {
+        cleanupPending(new Error("Gateway socket open timeout."));
+        try {
+          ws.close();
+        } catch {
+          // no-op
+        }
+        reject(new Error("Gateway socket open timeout."));
+      }
+    }, 10000);
   });
 }
 
@@ -195,13 +218,23 @@ export async function POST(req: Request) {
   }
 
   const socketUrl = normalizeGatewaySocketUrl(gatewayUrl);
-  const client = await createGatewayClient(socketUrl).catch(() => null);
-  if (!client) {
+  const clientResult = await createGatewayClient(socketUrl)
+    .then((client) => ({ client, error: null as string | null }))
+    .catch((error: unknown) => ({
+      client: null as GatewayClient | null,
+      error: error instanceof Error ? error.message : String(error),
+    }));
+
+  if (!clientResult.client) {
     return NextResponse.json(
-      { error: "Could not reach chat gateway." },
+      {
+        error: "Could not reach chat gateway.",
+        details: clientResult.error || "Unknown WebSocket error.",
+      },
       { status: 502 },
     );
   }
+  const client = clientResult.client;
 
   const sessionKey = `agent:${agentId}:${parsed.data.user || "website"}`;
 
